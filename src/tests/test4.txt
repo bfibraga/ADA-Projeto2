@@ -1,0 +1,10 @@
+5 6
+0 Gets 100 3
+0 Pays 100 1
+1 Gets 1 2
+2 Gets 1 1
+2 Gets 1 4
+3 Pays 150 4
+0 4 100
+
+Full of energy

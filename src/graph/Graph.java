@@ -1,4 +1,4 @@
-package utils;
+package graph;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,13 +34,13 @@ public class Graph {
         this.edges[node1].add(new_pair);
     }
 
-    //TODO Change to improve its complexity
     public List<Pair<Integer>> findSuccessors(int node){
         this.initializeList(node);
         return this.edges[node];
     }
 
-    public List<Integer> findAncestors(int node){
+    //TODO Remove later
+    /*public List<Integer> findAncestors(int node){
         List<Integer> result = new ArrayList<>();
         for (int v = 0; v < edges.length; v++) {
             if (this.edges[v] != null){
@@ -50,5 +50,5 @@ public class Graph {
             }
         }
         return result;
-    }
+    }*/
 }

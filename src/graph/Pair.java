@@ -1,4 +1,4 @@
-package utils;
+package graph;
 
 public class Pair<T> {
 
