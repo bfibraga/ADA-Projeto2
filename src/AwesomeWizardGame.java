@@ -29,48 +29,59 @@ public class AwesomeWizardGame {
     }
 
     public int maximumEnergy() {
-        int[] previous_length = new int[this.graph.nNodes()];
-        int[] length = new int[this.graph.nNodes()];
+        //int[] previous_length = new int[this.graph.nNodes()];
+        int[][] length = new int[this.graph.nNodes()][2];
         boolean[] can_reach_end = new boolean[this.graph.nNodes()];
 
         //Initialize all values with maximum length possible
         for (int n = 0; n < this.graph.nNodes(); n++) {
-            length[n] = Integer.MIN_VALUE;
-            previous_length[n] = Integer.MIN_VALUE;
+            length[n][0] = Integer.MIN_VALUE;
+            length[n][1] = Integer.MIN_VALUE;
             can_reach_end[n] = false;
         }
-        length[this.start] = 0;
-        previous_length[this.start] = 0;
+        length[this.start][0] = 0;
+        length[this.start][1] = 0;
         can_reach_end[this.end] = true;
 
-        boolean changes = false;
+        boolean changes;
         for (int n = 1; n < this.graph.nNodes(); n++) {
-            changes = update(length, previous_length, can_reach_end);
+            changes = update(length, can_reach_end);
 
             //TODO Delete this later
-            System.out.println("\nIteration " + n);
+            /*System.out.println("\nIteration " + n);
             for (int node = 0; node < length.length; node++) {
-                System.out.println("Length: " + node + ": " + length[node]);
-                System.out.println("Previous_length: " + node + ": " + previous_length[node]);
+                System.out.println("Length: " + node + ": " + length[node][0]);
+                System.out.println("Previous_length: " + node + ": " + length[node][1]);
                 System.out.println("Can reach wizard? " + can_reach_end[node]);
-                int delta = length[node] + previous_length[node];
+                int delta = length[node][0] - length[node][1];
                 System.out.println("Delta: " + node + ": " + delta);
-                System.out.println(Integer.compare(length[node], previous_length[node]));
-            }
+                System.out.println();
+            }*/
 
             /*if (!changes){
                 break;
             }*/
         }
 
-        return Math.max(energy + length[end], 0);
+        int positive_loop = -1;
+        for (int n = 0 ; n < this.graph.nNodes() ; n++){
+            if (length[n][0] - length[n][1] > 0){
+                positive_loop = n;
+                break;
+            }
+        }
+
+        if (positive_loop != -1 && can_reach_end[positive_loop]){
+            return Integer.MAX_VALUE;
+        }
+
+        return Math.max(energy + length[end][0], 0);
     }
 
-    private boolean update(int[] length, int[] previous_length, boolean[] can_reach_end) {
+    private boolean update(int[][] length, boolean[] can_reach_end) {
         boolean changes = false;
-
         for (int node1 = 0; node1 < this.graph.nNodes(); node1++) {
-            previous_length[node1] = length[node1];
+            length[node1][1] = length[node1][0];
             List<Pair<Integer>> successors = this.graph.findSuccessors(node1);
             for (Pair<Integer> pair: successors) {
                 int node2 = pair.getValue1();
@@ -80,16 +91,17 @@ public class AwesomeWizardGame {
                     can_reach_end[node1] = true;
                 }
 
-                if (length[node1] > Integer.MIN_VALUE){
-                    int new_length = length[node1] + label;
+                if (length[node1][0] > Integer.MIN_VALUE){
+                    int new_length = length[node1][0] + label;
 
-                    if (new_length > length[node2]){
-
-                        length[node2] = new_length;
+                    if (new_length > length[node2][0]){
+                        length[node2][0] = new_length;
                         changes = true;
                     }
                 }
+
             }
+
 
         }
 
