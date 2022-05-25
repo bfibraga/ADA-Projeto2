@@ -39,16 +39,4 @@ public class Graph {
         return this.edges[node];
     }
 
-    //TODO Remove later
-    /*public List<Integer> findAncestors(int node){
-        List<Integer> result = new ArrayList<>();
-        for (int v = 0; v < edges.length; v++) {
-            if (this.edges[v] != null){
-                for (Pair<Integer> curr_node: this.edges[v]) {
-                    if (curr_node.getValue1() == node) result.add(v);
-                }
-            }
-        }
-        return result;
-    }*/
 }

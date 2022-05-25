@@ -63,16 +63,10 @@ public class AwesomeWizardGame {
             }*/
         }
 
-        int positive_loop = -1;
         for (int n = 0 ; n < this.graph.nNodes() ; n++){
-            if (length[n][0] - length[n][1] > 0){
-                positive_loop = n;
-                break;
+            if (length[n][0] - length[n][1] > 0 && can_reach_end[n]){
+                return Integer.MAX_VALUE;
             }
-        }
-
-        if (positive_loop != -1 && can_reach_end[positive_loop]){
-            return Integer.MAX_VALUE;
         }
 
         return Math.max(energy + length[end][0], 0);
@@ -99,6 +93,8 @@ public class AwesomeWizardGame {
                         changes = true;
                     }
                 }
+
+
 
             }
 
