@@ -23,7 +23,7 @@ public class Main {
 
         AwesomeWizardGame awesomeWizardGame = new AwesomeWizardGame(nChallenges);
         for (int d = 0; d < nDecisions; d++) {
-            line = in.readLine().split(SPACE_REGEX);
+            line = in.readLine().split(" ");
             //C1 P/G V C2
             int previous_challenge = Integer.parseInt(line[0]);
             String type = line[1];
@@ -34,16 +34,33 @@ public class Main {
             awesomeWizardGame.addPath(previous_challenge, type, value, next_challenge);
         }
 
-        line = in.readLine().split(SPACE_REGEX);
+        line = in.readLine().split(" ");
         int start_challenge = Integer.parseInt(line[0]);
         int wizard_challenge = Integer.parseInt(line[1]);
         int initial_energy = Integer.parseInt(line[2]);
 
         awesomeWizardGame.setOrigin(start_challenge, initial_energy, wizard_challenge);
 
-        int maximum = awesomeWizardGame.maximumEnergy();
-        System.out.println(maximum >= initial_energy ? FULL_OF_ENERGY : maximum);
+        int maximum = 0;
+        try {
+            maximum = awesomeWizardGame.maximumEnergy();
+            if (maximum >= initial_energy)
+                System.out.println("Full of energy");
+            else
+                System.out.println(maximum);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         in.close();
     }
+    /*public static void main(String[] args) {
+        Graph graph = new Graph(10);
+        graph.addEdge(2,3);
+        graph.addEdge(4,3);
+        graph.addEdge(1,2);
+
+        System.out.println(graph.findDescendants(2));
+        System.out.println(graph.findAncestors(5));
+    }*/
 }
