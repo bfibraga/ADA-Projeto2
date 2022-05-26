@@ -1,3 +1,7 @@
+/**
+ * @author Goncalo Prata 52912
+ * @author Bruno Braga 57747
+ */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
